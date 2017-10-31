@@ -20,58 +20,83 @@
 
             <div class="key" data-key="83">
                 <kbd>s</kbd>
-                <div>clap</div>
+                <div>snare</div>
             </div>
 
             <div class="key" data-key="68">
                 <kbd>d</kbd>
-                <div>clap</div>
+                <div>hi hat</div>
             </div>
 
             <div class="key" data-key="70">
                 <kbd>f</kbd>
-                <div>clap</div>
+                <div>open hi hat</div>
             </div>
 
             <div class="key" data-key="71">
                 <kbd>g</kbd>
-                <div>clap</div>
+                <div>kick 1</div>
             </div>
 
             <div class="key" data-key="72">
                 <kbd>h</kbd>
-                <div>clap</div>
+                <div>kick 2</div>
             </div>
 
             <div class="key" data-key="74">
                 <kbd>j</kbd>
-                <div>clap</div>
+                <div>perc</div>
             </div>
 
             <div class="key" data-key="75">
                 <kbd>k</kbd>
-                <div>clap</div>
+                <div>chrash</div>
             </div>
 
         </div>
 
-        <audio data-key="65" src="sounds/BD0010.mp3" type="audio/mp3"></audio>
+        <audio data-key="65" src="sounds/clap.mp3" type="audio/mp3"></audio>
+        <audio data-key="83" src="sounds/snare.mp3" type="audio/mp3"></audio>
+        <audio data-key="68" src="sounds/hihat.mp3" type="audio/mp3"></audio>
+        <audio data-key="70" src="sounds/openhihat.mp3" type="audio/mp3"></audio>
+        <audio data-key="71" src="sounds/kick1.mp3" type="audio/mp3"></audio>
+        <audio data-key="72" src="sounds/kick2.mp3" type="audio/mp3"></audio>
+        <audio data-key="74" src="sounds/perc.mp3" type="audio/mp3"></audio>
+        <audio data-key="75" src="sounds/crash.mp3" type="audio/mp3"></audio>
 
         <script type="text/javascript">
-
-            window.addEventListener("keydown", playAudio);
 
             function playAudio(e) {
 
                 let audio = document.querySelector("audio[data-key='" + e.keyCode + "']");
+                let key = document.querySelector(".key[data-key='" + e.keyCode + "']");
                 
                 if (!audio) {
                     return;
                 }
 
+                key.classList.add('playing');
+
                 audio.currentTime = 0;
                 audio.play();
+
             }
+
+            function removeTransition(e) {
+
+                if (e.propertyName !== "transform") {
+                    return;
+                }
+
+                e.target.classList.remove("playing");
+            }
+
+            window.addEventListener("keydown", playAudio);
+            let keys = document.querySelectorAll(".key");
+            for (let i = 0, length = keys.length; i < length; i++) {
+                keys[i].addEventListener('transitionend', removeTransition);
+            }
+
 
         </script>
 
