@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="UTF-8">
+        <title>JavaScript Drumkit</title>
+        <link href="style.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <div id="keys">
+
+            <div class="key" data-key="65">
+                <kbd>a</kbd>
+                <div>clap</div>
+            </div>
+
+            <div class="key" data-key="83">
+                <kbd>s</kbd>
+                <div>clap</div>
+            </div>
+
+            <div class="key" data-key="68">
+                <kbd>d</kbd>
+                <div>clap</div>
+            </div>
+
+            <div class="key" data-key="70">
+                <kbd>f</kbd>
+                <div>clap</div>
+            </div>
+
+            <div class="key" data-key="71">
+                <kbd>g</kbd>
+                <div>clap</div>
+            </div>
+
+            <div class="key" data-key="72">
+                <kbd>h</kbd>
+                <div>clap</div>
+            </div>
+
+            <div class="key" data-key="74">
+                <kbd>j</kbd>
+                <div>clap</div>
+            </div>
+
+            <div class="key" data-key="75">
+                <kbd>k</kbd>
+                <div>clap</div>
+            </div>
+
+        </div>
+
+        <audio data-key="65" src="sounds/BD0010.mp3" type="audio/mp3"></audio>
+
+        <script type="text/javascript">
+
+            window.addEventListener("keydown", playAudio);
+
+            function playAudio(e) {
+
+                let audio = document.querySelector("audio[data-key='" + e.keyCode + "']");
+                
+                if (!audio) {
+                    return;
+                }
+
+                audio.currentTime = 0;
+                audio.play();
+            }
+
+        </script>
+
+    </body>
+</html>
