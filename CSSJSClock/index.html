@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>CSS + JS Clock</title>
+    </head>
+    <body>
+
+    <div class="clock">
+        <div class="clock-face">
+            <div class="hand hour-hand"></div>
+            <div class="hand minute-hand"></div>
+            <div class="hand second-hand"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function setTime() {
+            
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const secondDegree = (seconds / 60 * 360) + 90;
+            const minuteDegree = (minutes / 60 * 360) + 90;
+            const hourDegree = (hours / 12 * 360) + 90;
+
+            const secondHand = document.querySelector(".second-hand");
+            const minuteHand = document.querySelector(".minute-hand");
+            const hourHand = document.querySelector(".hour-hand");
+            
+            secondHand.style.transform = "rotate(" + secondDegree + "deg)";
+            minuteHand.style.transform = "rotate(" + minuteDegree + "deg)";
+            hourHand.style.transform = "rotate(" + hourDegree + "deg)";
+        }
+
+        setInterval(setTime, 1000);
+
+    </script>
+
+    <style>
+
+        html {
+            height: 100%;
+            background: #f6f6f6;
+            background: radial-gradient(circle at center 30%, #f6f6f6, #999);
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .clock {
+            margin: 10% auto 0 auto;
+            height: 200px;
+            width: 200px;
+            border: solid 10px #fff;
+            border-radius: 50%;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .2), inset 0 1px 1px rgba(0, 0, 0, .2);-
+        }
+
+            .clock .clock-face {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                transform: translateY(-1px);
+            }
+
+                .clock .clock-face .hand {
+                    position: absolute;
+                    top: 50%;
+                    right: 50%;
+                    height: 2px;
+                    width: 48%;
+                    background: #333;
+                    transform-origin: 100%;
+                    transform: rotate(90deg);
+                    transition: all 0.1s;
+                    transition-timing-function: cubic-bezier(.5, 1.8, 1, 1);
+                }
+
+                .clock .clock-face .second-hand {
+                    height: 1px;
+                }
+
+                .clock .clock-face .minute-hand {
+                    width: 45%;
+                }
+
+                .clock .clock-face .hour-hand {
+                    width: 35%;
+                }
+
+    </style>
+
+    </body>
+</html>

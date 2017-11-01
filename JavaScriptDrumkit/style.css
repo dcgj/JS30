@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    font-size: 62.5%;
 }
 
 body {
@@ -10,7 +11,7 @@ body {
     justify-content: center;
     height: 100%;
     margin: 0;
-    font-family: sans-serif;
+    font-family: "helvetica neue", sans-serif;
 }
 
 #keys {
@@ -33,14 +34,14 @@ body {
 
         #keys .key kbd {
             display: block;
-            font-size: 35px;
+            font-size: 3.5rem;
             font-weight: bold;
             margin: 20px 0 15px 0;
         }
 
         #keys .key div {
             margin: 0 0 10px 0;
-            font-size: 12px;
+            font-size: 1.2rem;
             text-transform: uppercase;
             color: #bdbdbd;
         }
