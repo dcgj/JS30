@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS Variables and JS</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+
+        <div class="container">
+
+            <h1>CSS Variables and <span class="hl">JS</span></h1>
+
+            <div class="controls">
+
+                <div class="control">
+                    <label for="blur">Blur</label>
+                    <input type="range" min="0" max="10" value="5" name="blur" id="blur" data-unitsize="px">
+                </div>
+
+                <div class="control">
+                    <label for="border">Border</label>
+                    <input type="range" min="0" max="30" value="5" name="border" id="border" data-unitsize="px">
+                </div>
+
+                <div class="control">
+                    <label for="background">Color</label>
+                    <input type="color" value="#6DBCDB" name="background" id="background">
+                </div>
+
+            </div>
+
+            <img src="image.jpg" class="hl">
+
+        </div>
+
+        <style>
+
+            :root {
+                --blur: 5px;
+                --border: 5px;
+                --background: #6DBCDB;
+            }
+
+            html {
+                height: 100%;
+                font-size: 62.5%;
+            }
+
+            body {
+                margin: 0;
+                font-family: "helvetica neue", sans-serif;
+                font-size: 1.6rem;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                color: #D7DADB;
+                background: #2C3E50;
+            }
+
+            .container {
+                max-width: 980px;
+            }
+
+            .controls {
+                overflow: hidden;
+                margin-bottom: 20px;
+            }
+
+            .control {
+                float: left;
+                display: flex;
+                align-items: center;
+            }
+
+            input {
+                margin: 0 10px;
+            }
+
+            label {
+                font-size: 2rem;
+            }
+
+            img {
+                width: 100%;
+                height: auto;
+                border-style: solid;
+                box-sizing: border-box;
+                border-color: var(--background);
+                border-width: var(--border);
+                filter: blur(var(--blur));
+            }
+
+            img.hl {
+                background-color: var(--background);
+            }
+
+            span.hl {
+                color: var(--background); 
+            }
+
+        </style>
+
+        <script type="text/javascript">
+
+            const inputs = document.querySelectorAll(".controls input");
+            inputs.forEach(input => input.addEventListener('change', updateValues));
+            inputs.forEach(input => input.addEventListener('mousemove', updateValues));
+
+            function updateValues(event) {
+                const unitsize = this.dataset.unitsize || "";
+                console.log(unitsize);
+                document.documentElement.style.setProperty("--" + this.name, this.value + unitsize);
+            }
+
+        </script>
+
+    </body>
+</html>
