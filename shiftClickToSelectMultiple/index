@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Shift Click to select multiple</title>
+        <meta charset="UTF-8">
+
+    </head>
+    <body>
+
+        <style>
+
+            html {
+                font-size: 62.5%;
+                height: 100%;
+            }
+
+            body {
+                font-size: 1.6rem;
+                font-family: Arial, Helvetica, sans-serif;
+                margin: 0;
+                height: 100%;
+                background-color: #009688;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .inbox {
+                background-color: #fff;
+                box-shadow: 2px 2px 3px rgba(0, 0, 0, .3);
+                border-radius: 3px;
+            }
+
+                .inbox .item {
+                    display: flex;
+                    align-items: center;
+                    box-sizing: border-box;
+                    padding: 0 10px;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                .inbox .item:last-of-type {
+                    border-bottom: none;
+                }
+
+                    .inbox .item p {
+                        margin: 0;
+                        margin-left: 10px;
+                        padding: 15px 10px;
+                        border-left: 1px solid #ededed;
+                    }
+
+        </style>
+
+        <div class="inbox">
+
+            <div class="item">
+                <input type="checkbox" id="all">
+                <p>Check / Uncheck all</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>This is an inbox layout.</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>Check one item</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>Hold down your Shift key</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>Check a lower item</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>Everything inbetween should also be set to checked</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>Try do it with out any libraries</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>Just regular JavaScript</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>Good Luck!</p>
+            </div>
+            <div class="item">
+                <input type="checkbox">
+                <p>Don't forget to tweet your result!</p>
+            </div>
+
+        </div>
+
+        <script type="text/javascript">
+
+            const checkAll = document.querySelector("#all");
+            const checkboxes = document.querySelectorAll("input[type='checkbox']:not(#all)")
+            let shiftIsDown = false;
+            let firstChecked;
+
+            // We need to listen to keydown/up to allow for using tab/space for doing the checking
+            document.addEventListener("keydown", event => shiftIsDown = event.shiftKey);
+            document.addEventListener("keyup", event => shiftIsDown = event.shiftKey);
+            checkAll.addEventListener("click", handleCheckAll);
+
+            checkboxes.forEach(checkbox => checkbox.addEventListener("change", handleCheck));
+
+            function handleCheck(e) {
+
+                let inBetween = false;
+
+                if (shiftIsDown && this.checked) {
+                    
+                    checkboxes.forEach(checkbox => {
+
+                        if (checkbox === this || checkbox === firstChecked) {
+
+                            inBetween = !inBetween;
+
+                        }
+
+                        if (inBetween) {
+
+                            checkbox.checked = true;
+
+                        }
+
+                    });
+
+                }
+
+               firstChecked = this;
+
+            }
+
+            function handleCheckAll(e) {
+
+                checkboxes.forEach(checkbox => {
+
+                    checkbox.checked = checkAll.checked;
+
+                });
+
+            }
+
+        </script>
+
+    </body>
+</html>
