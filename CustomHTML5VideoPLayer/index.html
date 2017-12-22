@@ -77,38 +77,29 @@
                             opacity: 1;
                         }
 
-                .player .controls .play-pause {
-                    
+                .player .controls .play-pause button {
+                    background-color: transparent;
+                    padding: 3px 5px 5px 5px;
+                    cursor: pointer;
+                    width: 50px;
+                    text-align: center;
+                    border: none;
+                    color: #fb8c00;
+                    opacity: .8;
                 }
 
-                    .player .controls .play-pause .icon {
-                        cursor: pointer;
-                        padding: 5px;
-                        opacity: .7;
-                    }
-
-                    .player .controls .play-pause .icon:hover {
-                        cursor: pointer;
-                        padding: 5px;
-                        opacity: 1;
-                    }
-
-                    .player.playing .controls .play-pause .icon {
-                        
-                    }
-
-                    .player.paused .controls .play-pause .icon {
-                        
-                    }
+                .player .controls .play-pause button:hover {
+                    opacity: 1;
+                }
 
                 .player .controls .volume-control {
-                    margin-top: 3px;
+                    margin-top: 5px;
                     margin-left: 5px;
                 }
                 
         </style>
 
-        <div class="player">
+        <div class="player hover">
 
             <video class="video">
                 <source src="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164" type="video/mp4">
@@ -122,7 +113,7 @@
                 </div>
 
                 <div class="play-pause">
-                    <i class="icon icon-play"></i>
+                    <button type="button" class="icon">Play</button>
                 </div>
 
                 <div class="volume">
@@ -141,7 +132,7 @@
             const player = document.querySelector(".player");
             const video = document.querySelector(".video");
             const progressFill = document.querySelector(".progress-fill");
-            const play = document.querySelector(".fa-play");
+            const play = document.querySelector(".play-pause .icon");
             const volumeControl = document.querySelector(".volume-control");
 
             // console.dir(video);
@@ -177,13 +168,15 @@
 
                     video.play();
                     player.classList.add("playing");
-                    player.classList.remove("playing");
+                    player.classList.remove("paused");
+                    play.innerText = "Pause";
 
                 } else {
 
                     video.pause();
                     player.classList.add("paused");
                     player.classList.remove("playing");
+                    play.innerText = "Play";
 
                 }
 
