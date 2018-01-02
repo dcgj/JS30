@@ -30,6 +30,7 @@
                 width: 500px;
                 position: relative;
                 overflow: hidden;
+                box-shadow: 0 0 5px rgba(0, 0, 0, .6);
             }
 
                 .player .video {
@@ -45,7 +46,7 @@
                     height: 50px;
                     background: #333;
                     transition: all 500ms;
-                    color: #fb8c00;
+                    color: rgba(251, 140, 0, 1);
                     display: flex;
                     align-items: center;
                     padding: 0 10px;
@@ -63,12 +64,14 @@
                         left: 0;
                         right: 0;
                         height: 5px;
+                        background-color: rgba(251, 140, 0, .2);
+                        cursor: pointer;
                     }
 
                         .player .controls .progress .progress-fill {
                             height: 5px;
                             width: 0%;
-                            background-color: #fb8c00;
+                            background-color: rgba(251, 140, 0, 1);
                             opacity: .5;
                             transition: all 300ms;
                         }
@@ -84,7 +87,7 @@
                     width: 50px;
                     text-align: center;
                     border: none;
-                    color: #fb8c00;
+                    color: rgba(251, 140, 0, 1);
                     opacity: .8;
                 }
 
@@ -127,40 +130,12 @@
 
         <script type="text/javascript">
 
-            // @TODO: Add more controls and allow skipping by clicking
-
             const player = document.querySelector(".player");
             const video = document.querySelector(".video");
+            const progress = document.querySelector(".progress");
             const progressFill = document.querySelector(".progress-fill");
             const play = document.querySelector(".play-pause .icon");
             const volumeControl = document.querySelector(".volume-control");
-
-            // console.dir(video);
-
-            player.addEventListener("mouseenter", event => {
-
-                player.classList.add("hover");
-
-            });
-
-            player.addEventListener("mouseleave", event => {
-
-                player.classList.remove("hover");
-
-            });
-
-            video.addEventListener("click", playPause);
-
-            video.addEventListener("timeupdate", event => {
-
-                const secondsElapsed = Math.ceil(video.currentTime);
-                const percentsElapsed = secondsElapsed / 100;
-
-                progressFill.style.width = `${percentsElapsed}%`;
-
-            });
-
-            play.addEventListener("click", playPause);
 
             function playPause(event) {
 
@@ -182,10 +157,6 @@
 
             }
 
-            volumeControl.addEventListener("change", handleVolume);
-            volumeControl.addEventListener("mousemove", handleVolume);
-            volumeControl.value = video.volume * 100;
-
             function handleVolume(event) {
 
                 if (volumeControl.value !== video.volume * 100) {
@@ -195,6 +166,35 @@
                 }
 
             }
+
+            function updateProgress(event) {
+
+                const seconds = Math.ceil(video.duration);
+                const secondsElapsed = Math.ceil(video.currentTime);
+                const percentsElapsed = secondsElapsed / seconds * 100;
+                progressFill.style.width = `${percentsElapsed}%`;
+                
+            }
+
+            progress.addEventListener("click", (event) => {
+
+                const width = progress.offsetWidth;
+                const x = event.offsetX;
+                const percent = x / width * 100;
+                video.currentTime = video.duration / 100 * percent;
+
+                updateProgress();
+
+            });
+
+            player.addEventListener("mouseenter", event => player.classList.add("hover"));
+            player.addEventListener("mouseleave", event => player.classList.remove("hover"));
+            video.addEventListener("click", playPause);
+            video.addEventListener("timeupdate", updateProgress);
+            play.addEventListener("click", playPause);
+            volumeControl.addEventListener("change", handleVolume);
+            volumeControl.addEventListener("mousemove", handleVolume);
+            volumeControl.value = video.volume * 100;
 
         </script>
 
