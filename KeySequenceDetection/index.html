@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title>Key Sequence Detection</title>
+        <meta charset="UTF-8">
+
+    </head>
+    <body>
+
+        <style>
+        
+            html {
+                font-size: 62.5%;
+                font-family: Arial, Helvetica, sans-serif;
+                height: 100%;
+            }
+
+            body {
+                font-size: 1.6rem;
+                background: linear-gradient(to bottom right, #fff, #ddd);
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                padding-top: 10%;
+            }
+    
+
+        </style>
+
+        <p>Enter the KONAMI KODE: up, up, down, down, left, right, left, right, b, a.</p>
+
+        <script type="text/javascript">
+
+            const pressed = [];
+            const secret = [
+                "ArrowUp",
+                "ArrowUp",
+                "ArrowDown",
+                "ArrowDown",
+                "ArrowLeft",
+                "ArrowRight",
+                "ArrowLeft",
+                "ArrowRight",
+                "b",
+                "a"
+            ];
+
+            window.addEventListener('keyup', (e) => {
+
+                pressed.push(e.key);
+                pressed.splice(-11, pressed.length - secret.length);
+                
+                if (pressed.join('').includes(secret.join(''))) {
+                    const successMessage = document.createElement("H1");
+                    successMessage.innerText = "DING DING! YOU DID IT!";
+                    document.body.appendChild(successMessage);
+                }
+
+            });
+
+
+
+        </script>
+
+    </body>
+</html>
