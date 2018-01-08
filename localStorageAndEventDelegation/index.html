@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>LocalStorage</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <div class="wrapper">
+            <h2>LOCAL TAPAS</h2>
+            <ul class="plates">
+                <li>Loading Tapas...</li>
+            </ul>
+            <form class="add-items">
+            <input type="text" name="item" placeholder="Item Name" required>
+            <input type="submit" value="+ Add Item">
+            </form>
+        </div>
+
+        <script>
+
+            const addItems = document.querySelector('.add-items');
+            const itemsList = document.querySelector('.plates');
+            const items = [];
+
+            function submitItem(event) {
+                event.preventDefault();
+                let value = event.target['item'].value
+                items.push({
+                    value: value,
+                    checked: false
+                });
+                renderList();
+            }
+
+            function renderList() {
+                
+                // Clear list
+                while(itemsList.firstChild) {
+                    itemsList.removeChild(itemsList.firstChild);
+                }
+
+                // Render list
+                items.map((item, index) => {
+                    
+                    let checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = item.checked;
+
+                    let labelText = document.createElement('text')
+                    labelText.innerText = item.value;
+
+                    let label = document.createElement('label');
+                    label.appendChild(checkbox);
+                    label.appendChild(labelText);
+
+                    let listItem = document.createElement('li');
+                    listItem.appendChild(label);
+
+                    itemsList.appendChild(listItem);
+
+                });
+
+            }
+
+            function toggleCheckbox(event) {
+                if (event.target.tagName !== 'INPUT') {
+                    return;
+                }
+                // @todo: Add to localStorage
+            }
+
+            addItems.addEventListener('submit', submitItem);
+            itemsList.addEventListener('click', toggleCheckbox);
+
+        </script>
+
+    </body>
+</html>
+
